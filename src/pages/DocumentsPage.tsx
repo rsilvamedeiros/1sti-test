@@ -5,8 +5,8 @@ import { Header } from '../components/Header';
 import { Stats } from '../components/Stats';
 import { Table } from '../components/Table';
 import { useDocuments } from '../hooks/useDocuments';
-import type { CustomerDocument, DocumentStatus } from '../types';
-import { filterDocuments, getDocumentStats, isStatusFilter, type StatusFilter } from '../utils/document-utils';
+import type { CustomerDocument, DocumentStatus, StatusFilter } from '../types';
+import { filterDocuments, getDocumentStats, isStatusFilter } from '../utils/document-utils';
 
 export function DocumentsPage() {
   const [query, setQuery] = useState('');

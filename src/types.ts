@@ -1,5 +1,8 @@
-// Arquivo propositalmente incompleto. O candidato deve melhorar a modelagem.
-export type DocumentStatus = 'pending' | 'approved' | 'rejected' | 'reviewing';
+export const documentStatuses = ['pending', 'approved', 'rejected', 'reviewing'] as const;
+
+export type DocumentStatus = (typeof documentStatuses)[number];
+
+export type StatusFilter = DocumentStatus | 'all';
 
 export type CustomerDocument = {
   id: string;
@@ -12,4 +15,23 @@ export type CustomerDocument = {
   updatedAt?: string;
   confidence?: number;
   assignedTo?: string | null;
+};
+
+export type DocumentsResponse = CustomerDocument[];
+
+export type UpdateDocumentStatusPayload = {
+  id: CustomerDocument['id'];
+  status: DocumentStatus;
+};
+
+export type DocumentStats = {
+  total: number;
+  pending: number;
+  reviewing: number;
+  rejected: number;
+};
+
+export type StatusFilterOption = {
+  value: StatusFilter;
+  label: string;
 };

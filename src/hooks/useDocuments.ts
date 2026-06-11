@@ -1,12 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchDocuments, updateDocumentStatus } from '../api';
-import type { CustomerDocument, DocumentStatus } from '../types';
+import type { CustomerDocument, UpdateDocumentStatusPayload } from '../types';
 import { emptyDocuments } from '../utils/document-utils';
-
-type UpdateStatusPayload = {
-  id: string;
-  status: DocumentStatus;
-};
 
 const documentsQueryKey = ['documents'];
 
@@ -23,7 +18,7 @@ export function useDocuments({ onDocumentUpdated }: UseDocumentsOptions = {}) {
   });
 
   const updateStatusMutation = useMutation({
-    mutationFn: ({ id, status }: UpdateStatusPayload) => updateDocumentStatus(id, status),
+    mutationFn: (payload: UpdateDocumentStatusPayload) => updateDocumentStatus(payload),
     onSuccess: (updatedDocument) => {
       queryClient.setQueryData<CustomerDocument[]>(documentsQueryKey, (currentDocuments = emptyDocuments) =>
         currentDocuments.map((document) => (document.id === updatedDocument.id ? updatedDocument : document))

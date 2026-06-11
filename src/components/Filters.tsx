@@ -1,4 +1,5 @@
-import { statusFilters, type StatusFilter } from '../utils/document-utils';
+import type { StatusFilter } from '../types';
+import { statusFilters } from '../utils/document-utils';
 
 type FiltersProps = {
   query: string;

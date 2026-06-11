@@ -1,4 +1,4 @@
-import type { DocumentStats as DocumentStatsData } from '../utils/document-utils';
+import type { DocumentStats as DocumentStatsData } from '../types';
 
 type StatsProps = {
   stats: DocumentStatsData;

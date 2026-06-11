@@ -1,5 +1,5 @@
 import { documents } from './data';
-import type { CustomerDocument, DocumentStatus } from './types';
+import type { CustomerDocument, DocumentsResponse, UpdateDocumentStatusPayload } from './types';
 
 let state = [...documents];
 
@@ -7,7 +7,7 @@ function wait(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-export async function fetchDocuments(): Promise<CustomerDocument[]> {
+export async function fetchDocuments(): Promise<DocumentsResponse> {
   await wait(600);
 
   // Simula instabilidade ocasional. O candidato deve decidir como lidar com erro.
@@ -18,7 +18,10 @@ export async function fetchDocuments(): Promise<CustomerDocument[]> {
   return [...state];
 }
 
-export async function updateDocumentStatus(id: string, status: DocumentStatus): Promise<CustomerDocument> {
+export async function updateDocumentStatus({
+  id,
+  status
+}: UpdateDocumentStatusPayload): Promise<CustomerDocument> {
   await wait(350);
 
   const document = state.find((item) => item.id === id);
@@ -26,7 +29,7 @@ export async function updateDocumentStatus(id: string, status: DocumentStatus): 
     throw new Error('Documento não encontrado');
   }
 
-  const updated = {
+  const updated: CustomerDocument = {
     ...document,
     status,
     updatedAt: new Date().toISOString()

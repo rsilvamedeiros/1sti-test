@@ -1,13 +1,10 @@
-import type { CustomerDocument, DocumentStatus } from '../types';
-
-export type StatusFilter = DocumentStatus | 'all';
-
-export type DocumentStats = {
-  total: number;
-  pending: number;
-  reviewing: number;
-  rejected: number;
-};
+import type {
+  CustomerDocument,
+  DocumentStats,
+  DocumentStatus,
+  StatusFilter,
+  StatusFilterOption
+} from '../types';
 
 export const emptyDocuments: CustomerDocument[] = [];
 
@@ -18,7 +15,7 @@ export const statusLabels: Record<DocumentStatus, string> = {
   reviewing: 'Em análise'
 };
 
-export const statusFilters: Array<{ value: StatusFilter; label: string }> = [
+export const statusFilters: StatusFilterOption[] = [
   { value: 'all', label: 'Todos os status' },
   { value: 'pending', label: statusLabels.pending },
   { value: 'reviewing', label: statusLabels.reviewing },
