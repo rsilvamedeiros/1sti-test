@@ -28,14 +28,19 @@ export function useDocuments({ onDocumentUpdated }: UseDocumentsOptions = {}) {
   });
 
   const error = documentsQuery.error instanceof Error ? documentsQuery.error.message : 'Falha ao carregar documentos';
+  const updateError =
+    updateStatusMutation.error instanceof Error ? updateStatusMutation.error.message : 'Falha ao atualizar documento';
 
   return {
     documents: documentsQuery.data ?? emptyDocuments,
     error,
     isError: documentsQuery.isError,
+    isFetching: documentsQuery.isFetching,
     isLoading: documentsQuery.isPending,
+    isUpdateError: updateStatusMutation.isError,
     isUpdatingStatus: updateStatusMutation.isPending,
     refetchDocuments: documentsQuery.refetch,
+    updateError,
     updateStatus: updateStatusMutation.mutate
   };
 }

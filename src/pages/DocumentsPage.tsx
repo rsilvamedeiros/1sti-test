@@ -1,25 +1,29 @@
 import { useMemo, useState } from 'react';
 import { Drawer } from '../components/Drawer';
+import { EmptyState } from '../components/EmptyState';
+import { Feedback } from '../components/Feedback';
 import { Filters } from '../components/Filters';
 import { Header } from '../components/Header';
 import { Stats } from '../components/Stats';
 import { Table } from '../components/Table';
+import { useDocumentFilters } from '../hooks/useDocumentFilters';
 import { useDocuments } from '../hooks/useDocuments';
-import type { CustomerDocument, DocumentStatus, StatusFilter } from '../types';
-import { filterDocuments, getDocumentStats, isStatusFilter } from '../utils/document-utils';
+import type { CustomerDocument, DocumentStatus } from '../types';
+import { getDocumentStats } from '../utils/document-utils';
 
 export function DocumentsPage() {
-  const [query, setQuery] = useState('');
-  const [status, setStatus] = useState<StatusFilter>('all');
   const [selectedDocument, setSelectedDocument] = useState<CustomerDocument | null>(null);
 
   const {
     documents,
     error,
     isError,
+    isFetching,
     isLoading,
+    isUpdateError,
     isUpdatingStatus,
     refetchDocuments,
+    updateError,
     updateStatus
   } = useDocuments({
     onDocumentUpdated: (updatedDocument) => {
@@ -29,14 +33,11 @@ export function DocumentsPage() {
     }
   });
 
-  const stats = useMemo(() => getDocumentStats(documents), [documents]);
-  const filteredDocuments = useMemo(() => filterDocuments(documents, query, status), [documents, query, status]);
+  const { filteredDocuments, query, setQuery, setStatusFilter, status } = useDocumentFilters(documents);
 
-  function handleStatusFilterChange(value: string) {
-    if (isStatusFilter(value)) {
-      setStatus(value);
-    }
-  }
+  const stats = useMemo(() => getDocumentStats(documents), [documents]);
+  const hasActiveFilters = query.trim().length > 0 || status !== 'all';
+  const isEmpty = !isLoading && !isError && filteredDocuments.length === 0;
 
   function handleStatusChange(id: string, nextStatus: DocumentStatus) {
     updateStatus({ id, status: nextStatus });
@@ -44,21 +45,25 @@ export function DocumentsPage() {
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-10">
-      <Header onRefresh={() => void refetchDocuments()} />
+      <Header isRefreshing={isFetching && !isLoading} onRefresh={() => void refetchDocuments()} />
 
       <Stats stats={stats} />
 
-      <Filters
-        query={query}
-        status={status}
-        onQueryChange={setQuery}
-        onStatusChange={handleStatusFilterChange}
-      />
+      <Filters query={query} status={status} onQueryChange={setQuery} onStatusChange={setStatusFilter} />
 
-      {isLoading && <p className="rounded-xl border border-slate-200 bg-white p-4 text-slate-700">Carregando documentos...</p>}
-      {isError && <p className="rounded-xl border border-red-200 bg-red-50 p-4 text-red-800">{error}</p>}
+      {isLoading && <Feedback>Carregando documentos...</Feedback>}
 
-      {!isLoading && !isError && (
+      {isError && (
+        <Feedback actionLabel="Tentar novamente" onAction={() => void refetchDocuments()} tone="error">
+          {error}
+        </Feedback>
+      )}
+
+      {isUpdateError && <Feedback tone="error">{updateError}</Feedback>}
+
+      {isEmpty && <EmptyState hasActiveFilters={hasActiveFilters} />}
+
+      {!isLoading && !isError && !isEmpty && (
         <Table
           documents={filteredDocuments}
           isUpdatingStatus={isUpdatingStatus}

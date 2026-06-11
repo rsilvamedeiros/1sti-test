@@ -1,8 +1,9 @@
 type HeaderProps = {
+  isRefreshing: boolean;
   onRefresh: () => void;
 };
 
-export function Header({ onRefresh }: HeaderProps) {
+export function Header({ isRefreshing, onRefresh }: HeaderProps) {
   return (
     <section className="mb-6 flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
       <div>
@@ -13,10 +14,11 @@ export function Header({ onRefresh }: HeaderProps) {
         </p>
       </div>
       <button
-        className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-700"
+        className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-60"
+        disabled={isRefreshing}
         onClick={onRefresh}
       >
-        Recarregar
+        {isRefreshing ? 'Atualizando...' : 'Recarregar'}
       </button>
     </section>
   );

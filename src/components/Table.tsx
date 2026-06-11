@@ -9,10 +9,10 @@ type TableProps = {
   onStatusChange: (id: string, status: DocumentStatus) => void;
 };
 
-const headerClass = "border-b border-slate-200 px-4 py-3 text-left text-xs font-bold uppercase tracking-wide text-slate-500";
-const cellClass = "border-b border-slate-200 px-4 py-3 align-top text-sm text-slate-700";
+const headerClass = 'border-b border-slate-200 px-4 py-3 text-left text-xs font-bold uppercase tracking-wide text-slate-500';
+const cellClass = 'border-b border-slate-200 px-4 py-3 align-top text-sm text-slate-700';
 const actionButtonClass =
-  "rounded-lg bg-slate-900 px-3 py-2 text-sm font-semibold text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-50";
+  'rounded-lg bg-slate-900 px-3 py-2 text-sm font-semibold text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-50';
 
 export function Table({ documents, isUpdatingStatus, onDocumentSelect, onStatusChange }: TableProps) {
   return (

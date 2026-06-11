@@ -8,8 +8,12 @@ type DrawerProps = {
 
 export function Drawer({ document, onClose }: DrawerProps) {
   return (
-    <aside className="fixed right-6 top-6 w-[340px] max-w-[calc(100vw-48px)] rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl">
+    <aside
+      aria-label="Detalhes do documento"
+      className="fixed right-6 top-6 w-[340px] max-w-[calc(100vw-48px)] rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl"
+    >
       <button
+        aria-label="Fechar detalhes"
         className="float-right flex h-8 w-8 items-center justify-center rounded-lg bg-slate-900 text-white transition hover:bg-slate-700"
         onClick={onClose}
       >
