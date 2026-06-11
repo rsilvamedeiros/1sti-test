@@ -6,9 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "test": "vitest",
+    "test": "vitest --run",
+    "test:watch": "vitest",
     "test:ui": "vitest --ui",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+    "lint": "eslint . --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
@@ -24,9 +25,11 @@
     "@testing-library/user-event": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "@eslint/js": "latest",
     "vitest": "latest",
     "jsdom": "latest",
     "eslint": "latest",
+    "globals": "latest",
     "typescript-eslint": "latest",
     "eslint-plugin-react-hooks": "latest",
     "eslint-plugin-react-refresh": "latest"

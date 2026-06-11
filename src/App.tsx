@@ -2,7 +2,9 @@ import { useEffect, useMemo, useState } from 'react';
 import { fetchDocuments, updateDocumentStatus } from './api';
 import type { CustomerDocument, DocumentStatus } from './types';
 
-const statusLabels: any = {
+type StatusFilter = DocumentStatus | 'all';
+
+const statusLabels: Record<DocumentStatus, string> = {
   pending: 'Pendente',
   approved: 'Aprovado',
   rejected: 'Rejeitado',
@@ -22,20 +24,27 @@ function formatDate(value: string) {
 export default function App() {
   const [documents, setDocuments] = useState<CustomerDocument[]>([]);
   const [query, setQuery] = useState('');
-  const [status, setStatus] = useState('all');
+  const [status, setStatus] = useState<StatusFilter>('all');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const [selectedDocument, setSelectedDocument] = useState<any>(null);
+  const [selectedDocument, setSelectedDocument] = useState<CustomerDocument | null>(null);
 
   useEffect(() => {
-    setIsLoading(true);
-    fetchDocuments()
-      .then((result) => {
+    async function loadDocuments() {
+      setIsLoading(true);
+
+      try {
+        const result = await fetchDocuments();
         setDocuments(result);
         setError('');
-      })
-      .catch((err) => setError(err.message))
-      .finally(() => setIsLoading(false));
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Falha ao carregar documentos');
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    void loadDocuments();
   }, []);
 
   const stats = useMemo(() => {
@@ -100,7 +109,7 @@ export default function App() {
           value={query}
           onChange={(event) => setQuery(event.target.value)}
         />
-        <select value={status} onChange={(event) => setStatus(event.target.value)}>
+        <select value={status} onChange={(event) => setStatus(event.target.value as StatusFilter)}>
           <option value="all">Todos os status</option>
           <option value="pending">Pendente</option>
           <option value="reviewing">Em análise</option>
