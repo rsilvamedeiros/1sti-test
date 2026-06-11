@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import type { CustomerDocument, StatusFilter } from '../types';
 import { filterDocuments, isStatusFilter } from '../utils/document-utils';
 
@@ -8,11 +8,11 @@ export function useDocumentFilters(documents: CustomerDocument[]) {
 
   const filteredDocuments = useMemo(() => filterDocuments(documents, query, status), [documents, query, status]);
 
-  function setStatusFilter(value: string) {
+  const setStatusFilter = useCallback((value: string) => {
     if (isStatusFilter(value)) {
       setStatus(value);
     }
-  }
+  }, []);
 
   return {
     filteredDocuments,

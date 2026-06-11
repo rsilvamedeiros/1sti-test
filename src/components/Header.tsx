@@ -1,9 +1,11 @@
+import { memo } from 'react';
+
 type HeaderProps = {
   isRefreshing: boolean;
   onRefresh: () => void;
 };
 
-export function Header({ isRefreshing, onRefresh }: HeaderProps) {
+export const Header = memo(function Header({ isRefreshing, onRefresh }: HeaderProps) {
   return (
     <section className="mb-6 flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
       <div>
@@ -22,4 +24,4 @@ export function Header({ isRefreshing, onRefresh }: HeaderProps) {
       </button>
     </section>
   );
-}
+});

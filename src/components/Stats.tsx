@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import type { DocumentStats as DocumentStatsData } from '../types';
 
 type StatsProps = {
@@ -11,7 +12,7 @@ const statItems = [
   { key: 'rejected', label: 'Rejeitados' }
 ] as const;
 
-export function Stats({ stats }: StatsProps) {
+export const Stats = memo(function Stats({ stats }: StatsProps) {
   return (
     <section className="mb-5 grid grid-cols-2 gap-4 md:grid-cols-4" aria-label="Indicadores">
       {statItems.map((item) => (
@@ -22,4 +23,4 @@ export function Stats({ stats }: StatsProps) {
       ))}
     </section>
   );
-}
+});

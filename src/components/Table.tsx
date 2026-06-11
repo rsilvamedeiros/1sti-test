@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import type { CustomerDocument, DocumentStatus } from '../types';
 import { formatDate } from '../utils/document-utils';
 import { StatusBadge } from './StatusBadge';
@@ -14,7 +15,7 @@ const cellClass = 'border-b border-slate-200 px-4 py-3 align-top text-sm text-sl
 const actionButtonClass =
   'rounded-lg bg-slate-900 px-3 py-2 text-sm font-semibold text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-50';
 
-export function Table({ documents, isUpdatingStatus, onDocumentSelect, onStatusChange }: TableProps) {
+export const Table = memo(function Table({ documents, isUpdatingStatus, onDocumentSelect, onStatusChange }: TableProps) {
   return (
     <section className="overflow-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
       <table className="w-full border-collapse">
@@ -82,4 +83,4 @@ export function Table({ documents, isUpdatingStatus, onDocumentSelect, onStatusC
       </table>
     </section>
   );
-}
+});

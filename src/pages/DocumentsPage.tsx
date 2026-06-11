@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { Drawer } from '../components/Drawer';
 import { EmptyState } from '../components/EmptyState';
 import { Feedback } from '../components/Feedback';
@@ -14,6 +14,12 @@ import { getDocumentStats } from '../utils/document-utils';
 export function DocumentsPage() {
   const [selectedDocument, setSelectedDocument] = useState<CustomerDocument | null>(null);
 
+  const handleDocumentUpdated = useCallback((updatedDocument: CustomerDocument) => {
+    setSelectedDocument((currentDocument) =>
+      currentDocument?.id === updatedDocument.id ? updatedDocument : currentDocument
+    );
+  }, []);
+
   const {
     documents,
     error,
@@ -26,11 +32,7 @@ export function DocumentsPage() {
     updateError,
     updateStatus
   } = useDocuments({
-    onDocumentUpdated: (updatedDocument) => {
-      setSelectedDocument((currentDocument) =>
-        currentDocument?.id === updatedDocument.id ? updatedDocument : currentDocument
-      );
-    }
+    onDocumentUpdated: handleDocumentUpdated
   });
 
   const { filteredDocuments, query, setQuery, setStatusFilter, status } = useDocumentFilters(documents);
@@ -39,13 +41,24 @@ export function DocumentsPage() {
   const hasActiveFilters = query.trim().length > 0 || status !== 'all';
   const isEmpty = !isLoading && !isError && filteredDocuments.length === 0;
 
-  function handleStatusChange(id: string, nextStatus: DocumentStatus) {
-    updateStatus({ id, status: nextStatus });
-  }
+  const handleRefresh = useCallback(() => {
+    void refetchDocuments();
+  }, [refetchDocuments]);
+
+  const handleStatusChange = useCallback(
+    (id: string, nextStatus: DocumentStatus) => {
+      updateStatus({ id, status: nextStatus });
+    },
+    [updateStatus]
+  );
+
+  const handleCloseDrawer = useCallback(() => {
+    setSelectedDocument(null);
+  }, []);
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-10">
-      <Header isRefreshing={isFetching && !isLoading} onRefresh={() => void refetchDocuments()} />
+      <Header isRefreshing={isFetching && !isLoading} onRefresh={handleRefresh} />
 
       <Stats stats={stats} />
 
@@ -54,7 +67,7 @@ export function DocumentsPage() {
       {isLoading && <Feedback>Carregando documentos...</Feedback>}
 
       {isError && (
-        <Feedback actionLabel="Tentar novamente" onAction={() => void refetchDocuments()} tone="error">
+        <Feedback actionLabel="Tentar novamente" onAction={handleRefresh} tone="error">
           {error}
         </Feedback>
       )}
@@ -72,7 +85,7 @@ export function DocumentsPage() {
         />
       )}
 
-      {selectedDocument && <Drawer document={selectedDocument} onClose={() => setSelectedDocument(null)} />}
+      {selectedDocument && <Drawer document={selectedDocument} onClose={handleCloseDrawer} />}
     </main>
   );
 }

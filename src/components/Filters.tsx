@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import type { StatusFilter } from '../types';
 import { statusFilters } from '../utils/document-utils';
 
@@ -8,7 +9,7 @@ type FiltersProps = {
   onStatusChange: (status: string) => void;
 };
 
-export function Filters({ query, status, onQueryChange, onStatusChange }: FiltersProps) {
+export const Filters = memo(function Filters({ query, status, onQueryChange, onStatusChange }: FiltersProps) {
   return (
     <section className="mb-5 flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm md:flex-row">
       <label className="sr-only" htmlFor="document-search">
@@ -39,4 +40,4 @@ export function Filters({ query, status, onQueryChange, onStatusChange }: Filter
       </select>
     </section>
   );
-}
+});

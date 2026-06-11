@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import type { CustomerDocument } from '../types';
 import { formatDate, statusLabels } from '../utils/document-utils';
 
@@ -6,7 +7,7 @@ type DrawerProps = {
   onClose: () => void;
 };
 
-export function Drawer({ document, onClose }: DrawerProps) {
+export const Drawer = memo(function Drawer({ document, onClose }: DrawerProps) {
   return (
     <aside
       aria-label="Detalhes do documento"
@@ -34,4 +35,4 @@ export function Drawer({ document, onClose }: DrawerProps) {
       </p>
     </aside>
   );
-}
+});

@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import type { DocumentStatus } from '../types';
 import { statusLabels } from '../utils/document-utils';
 
@@ -12,10 +13,10 @@ const badgeClasses: Record<DocumentStatus, string> = {
   rejected: 'bg-red-100 text-red-800'
 };
 
-export function StatusBadge({ status }: StatusBadgeProps) {
+export const StatusBadge = memo(function StatusBadge({ status }: StatusBadgeProps) {
   return (
     <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-bold ${badgeClasses[status]}`}>
       {statusLabels[status]}
     </span>
   );
-}
+});
