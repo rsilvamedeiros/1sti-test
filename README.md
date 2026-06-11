@@ -1,8 +1,18 @@
-# React Document Review — Aplicação Base
+# React Document Review
 
-Esta é a aplicação base do desafio técnico.
+Aplicação React/TypeScript para listagem e revisão de documentos enviados por clientes.
 
-O objetivo é evoluir uma tela React funcional como se ela estivesse sendo preparada para produção. Não é necessário reconstruir a aplicação do zero; priorize melhorias bem justificadas, com foco em qualidade, manutenção, experiência de uso e segurança das mudanças.
+Esta solução evolui a base do desafio técnico com foco em organização, tipagem, estado assíncrono, feedbacks de interface, testes e documentação de decisões.
+
+## Stack
+
+- React
+- TypeScript
+- Vite
+- TanStack Query
+- Tailwind CSS
+- Testing Library
+- Vitest
 
 ## Como rodar
 
@@ -11,29 +21,48 @@ npm install
 npm run dev
 ```
 
-## Como testar
+## Scripts disponíveis
+
+```bash
+npm run dev
+npm run build
+npm test
+npm run test:watch
+npm run lint
+```
+
+## O que foi trabalhado
+
+- Separação da tela em `pages`, `components`, `hooks` e `utils`.
+- Uso de TanStack Query para estado de servidor.
+- Separação entre estado local, estado de filtros e estado de dados.
+- Tipagem centralizada para documentos, status, filtros, payloads e respostas.
+- Feedback para loading, erro, retry e estado vazio.
+- Acessibilidade básica em filtros e drawer.
+- Otimizações pontuais com `useMemo`, `useCallback` e `memo`.
+- Testes cobrindo listagem, filtros/empty state e atualização de status.
+- Dependências fixadas para instalação mais reprodutível.
+
+## Testes
+
+Os testes usam Vitest e Testing Library.
 
 ```bash
 npm test
 ```
 
-## Contexto da tela
+Coberturas principais:
 
-A aplicação simula uma tela interna de listagem e gestão de documentos enviados por clientes. A tela permite:
+- carregamento e exibição de documentos;
+- filtro de documentos e estado vazio;
+- atualização de status ao aprovar um documento.
 
-- listar documentos;
-- filtrar por texto e status;
-- simular atualização de status;
-- visualizar indicadores simples.
+## Decisões técnicas
 
-## Entrega esperada
+As principais decisões, trade-offs e próximos passos estão documentados em [DECISIONS.md](./DECISIONS.md).
 
-Ao finalizar, envie o repositório ou um arquivo `.zip` com a sua solução, incluindo o arquivo `DECISIONS.md` preenchido.
+## Uso de IA assistiva
 
-No `DECISIONS.md`, explique resumidamente:
+Foi utilizada IA assistiva como apoio na análise inicial do projeto, revisão de scripts/dependências, criação e ajuste de testes, correções após falhas de build/lint/test e geração inicial da documentação.
 
-- principais mudanças realizadas;
-- decisões técnicas e trade-offs;
-- testes adicionados;
-- melhorias de performance, UX e observabilidade consideradas;
-- uso de ferramentas de IA, se houver.
+A divisão de pastas, organização da tela, escolhas de arquitetura, refinamentos de funções, ajustes de UX e revisão final foram conduzidos manualmente.
