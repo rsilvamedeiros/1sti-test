@@ -51,6 +51,6 @@
 
 ## Uso de IA assistiva
 
-- Ferramentas utilizadas: ChatGPT/Codex.
+- Ferramentas utilizadas: Codex - GPT-5.5
 - Como foram usadas: apoio na análise inicial do projeto, revisão dos scripts e dependências do `package.json`, criação e ajuste de testes, correções após falhas de `build`/`lint`/`test` e geração inicial deste `DECISIONS.md`.
 - O que foi feito e revisado manualmente: definição da divisão de pastas, separação da tela em página/componentes/hooks/utils, organização do `App`, refinamento das funções auxiliares, escolhas de arquitetura, ajustes de UX, revisão dos outputs gerados e validação final com `npm run build`, `npm test` e `npm run lint`.

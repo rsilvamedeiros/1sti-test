@@ -3,7 +3,7 @@ import { fetchDocuments, updateDocumentStatus } from '../api';
 import type { CustomerDocument, UpdateDocumentStatusPayload } from '../types';
 import { emptyDocuments } from '../utils/document-utils';
 
-const documentsQueryKey = ['documents'];
+const documentsQueryKey = ['documents'] as const;
 
 type UseDocumentsOptions = {
   onDocumentUpdated?: (document: CustomerDocument) => void;

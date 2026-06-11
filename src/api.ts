@@ -1,6 +1,10 @@
 import { documents } from './data';
 import type { CustomerDocument, DocumentsResponse, UpdateDocumentStatusPayload } from './types';
 
+const FETCH_DELAY_MS = 600;
+const UPDATE_DELAY_MS = 350;
+const FETCH_FAILURE_RATE = 0.03;
+
 let state = [...documents];
 
 function wait(ms: number) {
@@ -8,10 +12,9 @@ function wait(ms: number) {
 }
 
 export async function fetchDocuments(): Promise<DocumentsResponse> {
-  await wait(600);
+  await wait(FETCH_DELAY_MS);
 
-  // Simula instabilidade ocasional. O candidato deve decidir como lidar com erro.
-  if (Math.random() < 0.03) {
+  if (Math.random() < FETCH_FAILURE_RATE) {
     throw new Error('Falha ao carregar documentos');
   }
 
@@ -22,7 +25,7 @@ export async function updateDocumentStatus({
   id,
   status
 }: UpdateDocumentStatusPayload): Promise<CustomerDocument> {
-  await wait(350);
+  await wait(UPDATE_DELAY_MS);
 
   const document = state.find((item) => item.id === id);
   if (!document) {
