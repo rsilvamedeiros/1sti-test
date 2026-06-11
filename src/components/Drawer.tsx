@@ -8,22 +8,25 @@ type DrawerProps = {
 
 export function Drawer({ document, onClose }: DrawerProps) {
   return (
-    <aside className="drawer">
-      <button className="close" onClick={onClose}>
+    <aside className="fixed right-6 top-6 w-[340px] max-w-[calc(100vw-48px)] rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl">
+      <button
+        className="float-right flex h-8 w-8 items-center justify-center rounded-lg bg-slate-900 text-white transition hover:bg-slate-700"
+        onClick={onClose}
+      >
         ×
       </button>
-      <h2>{document.title}</h2>
-      <p>
-        <strong>Cliente:</strong> {document.customerName}
+      <h2 className="mb-4 pr-10 text-xl font-bold text-slate-900">{document.title}</h2>
+      <p className="mb-2 text-sm text-slate-700">
+        <strong className="text-slate-900">Cliente:</strong> {document.customerName}
       </p>
-      <p>
-        <strong>Status:</strong> {statusLabels[document.status]}
+      <p className="mb-2 text-sm text-slate-700">
+        <strong className="text-slate-900">Status:</strong> {statusLabels[document.status]}
       </p>
-      <p>
-        <strong>Categoria:</strong> {document.category}
+      <p className="mb-2 text-sm text-slate-700">
+        <strong className="text-slate-900">Categoria:</strong> {document.category}
       </p>
-      <p>
-        <strong>Criado em:</strong> {formatDate(document.createdAt)}
+      <p className="text-sm text-slate-700">
+        <strong className="text-slate-900">Criado em:</strong> {formatDate(document.createdAt)}
       </p>
     </aside>
   );

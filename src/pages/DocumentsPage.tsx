@@ -43,7 +43,7 @@ export function DocumentsPage() {
   }
 
   return (
-    <main className="page">
+    <main className="mx-auto max-w-6xl px-6 py-10">
       <Header onRefresh={() => void refetchDocuments()} />
 
       <Stats stats={stats} />
@@ -55,8 +55,8 @@ export function DocumentsPage() {
         onStatusChange={handleStatusFilterChange}
       />
 
-      {isLoading && <p className="feedback">Carregando documentos...</p>}
-      {isError && <p className="feedback error">{error}</p>}
+      {isLoading && <p className="rounded-xl border border-slate-200 bg-white p-4 text-slate-700">Carregando documentos...</p>}
+      {isError && <p className="rounded-xl border border-red-200 bg-red-50 p-4 text-red-800">{error}</p>}
 
       {!isLoading && !isError && (
         <Table
