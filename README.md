@@ -28,6 +28,7 @@ npm run dev
 npm run build
 npm test
 npm run test:watch
+npm run test:ui
 npm run lint
 ```
 
@@ -49,6 +50,18 @@ Os testes usam Vitest e Testing Library.
 
 ```bash
 npm test
+```
+
+Para abrir a interface visual do Vitest no navegador:
+
+```bash
+npm run test:ui -- --watch --api 51204
+```
+
+Depois acesse:
+
+```text
+http://localhost:51204/__vitest__/
 ```
 
 Coberturas principais:
